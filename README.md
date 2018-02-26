@@ -251,7 +251,7 @@ go : 类似 window.history.go
 
 ```
 ```javascript
-10. 路由钩子函数（待续）
+10. 路由钩子函数
 
     钩子作用 ：主要用来通过跳转或取消的方式守卫导航
     植入方式 ：全局 / 单个路由独享 / 组件内。
@@ -357,7 +357,46 @@ go : 类似 window.history.go
 
 ```
 ```javascript
-11.HTML5 history 模式配置
+11.路由元信息（meta字段）
+    来源 : 我们知道我们浏览一些网站的时候有需要验证登录的也有不需要验证登录的，如果所有页面都做成验证登录的话
+           对于用户的体验是极差的，所以这个时候路由元信息就起到了很大的作用。
+    引用官方介绍：
+           -- 我们称呼 routes 配置中的每个路由对象为 路由记录。
+           -- 路由记录可以是嵌套的，因此，当一个路由匹配成功后，他可能匹配多个路由记录
+           -- 一个路由匹配到的所有路由记录会暴露为 $route 对象（还有在导航守卫中的路由对象）的 $route.matched 数组。
+           -- 因此，我们需要遍历 $route.matched 来检查路由记录中的 meta 字段。
+
+
+    let routes = [
+        { path: '/login',name: 'login',component: login},
+        { path: '/foo',name: 'foo',component: foo,
+          children: [
+            { path: 'bar', component: bar,meta: {needLogin: true}}//需要判断登录
+          ]
+        }
+    ];
+    let router = new VueRouter({
+        routes
+    });
+    router.beforeEach((to, from, next) => {
+        if (to.matched.some(record => record.meta.requiresAuth)) {
+            // this route requires auth, check if logged in
+            // if not, redirect to login page.
+            if (!auth.loggedIn()) {
+                 // redirect 作用是 登录页需要知道从哪跳过来的，方便登录成功后回到原页面
+                next({ path: '/login',query: { redirect: to.fullPath }})
+            } else {
+                next()
+            }
+        } else {
+            next() // 确保一定要调用 next()
+        }
+    })
+
+```
+```javascript
+11.HTML5 history 模式配置(由于兼容问题待续)
+
 
 
 
