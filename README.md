@@ -41,14 +41,6 @@ Node是后端，此时后端在前端手上，而用Node可以控制页面是服
      1.通过URL刷新页面
      2.需要指定
 ```
-
-```javascript
-var a = function(){
-  console.log("hello world !")
-}
-```
-
-
 ```javascript
 1.路由基础
 router-link :使用router-link组件来导航,在页面会替换为a标签将需要跳转的路由写在to当中
@@ -77,7 +69,7 @@ router-view:路由出口， 路由匹配到的组件将渲染在这里
   const app = new Vue({router:router}).$mount("#app");
 
 ```
-```html
+```javascript
 2.动态路由
   应用场景举例：我们有一个 User 组件，对于所有 ID 各不相同的用户，都要使用这个组件来渲染。
   配置方法：
@@ -131,7 +123,7 @@ router-view:路由出口， 路由匹配到的组件将渲染在这里
 
  
 ```
-```html5
+```javascript
 3.嵌套路由
     routes: [
         {
@@ -147,7 +139,7 @@ router-view:路由出口， 路由匹配到的组件将渲染在这里
     ]
 
 ```
-```vue
+```javascript
 4.编程式路由
   在 Vue 实例内部，可以通过 $router 访问路由实例。
   因此可以调用 this.$router.push、this.$router.replace、this.$router.go
@@ -184,7 +176,7 @@ go : 类似 window.history.go
       router.go(-100)
       router.go(100)
 ```
-```
+```javascript
 5.命名路由
   
   routes: [
@@ -196,7 +188,7 @@ go : 类似 window.history.go
   router.push({ name: 'user', params: { userId: 123 }})
 
 ```
-```
+```javascript
 6.命名视图
     <router-view></router-view>
     <router-view name="a" class="viewLeft"></router-view>
@@ -210,7 +202,7 @@ go : 类似 window.history.go
      ]
 
 ```
-```
+```javascript
 7.路由重定向
 
     routes: [
@@ -228,7 +220,7 @@ go : 类似 window.history.go
           }}
      ]
 ```
-```
+```javascript
 8. alias 相对于模板的别名
    什么是别名 ? 
       简单来说就是：这个人的大名叫张三，小名叫二狗子，我们找张三能找到这个人，同样找二狗子也能找到，
@@ -241,7 +233,7 @@ go : 类似 window.history.go
            { path: '/zhangsan', components: zhangsan,alias:['/ergouzi','/shidan'] }
         ]
 ```
-```
+```javascript
 9. 处理 404 页面
     STEP_1 : 准备一个 404 页面的组件
     STEP_2 : 
@@ -258,7 +250,7 @@ go : 类似 window.history.go
               原因 ： 因为vue-router查询路径对象的方式就好比 if --> else if --> else 
 
 ```
-```
+```javascript
 10. 路由钩子函数（待续）
 
     钩子作用 ：主要用来通过跳转或取消的方式守卫导航
@@ -317,13 +309,13 @@ go : 类似 window.history.go
       
 
 ```
-```
+```javascript
 11.HTML5 history 模式配置
 
 
 
 ```
-```
+```javascript
 12.源码分析：
     router分析：http://cnodejs.org/topic/58d680c903d476b42d34c72b
     “滴滴”源码分析：https://github.com/DDFE/DDFE-blog（分析得很透彻）
