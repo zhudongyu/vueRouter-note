@@ -258,12 +258,59 @@ go : 类似 window.history.go
     **注意** ：动态路径参数（params）和查询字段（query）的改变并不会触发 进入/离开 的钩子函数，
                可以通过 watch --> $route 对象 或者 使用 beforRouteUpdate 钩子
 
+    完整的导航解析流程 :
+        @1.导航被触发。
+        @2.在失活的组件里调用离开守卫。  beforeRouterLeave
+        @3.调用全局的 beforeEach 守卫。 
+        @4.在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)
+        @5.在路由配置里调用 beforeEnter。
+        @6.解析异步路由组件。 renderDOM
+        @7.在被激活的组件里调用 beforeRouteEnter。
+        @8.调用全局的 beforeResolve 守卫 (2.5+)
+        @9.导航被确认
+        @10.调用全局的 afterEach 钩子
+        @11.触发 DOM 更新 component created
+        @12.用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数 
+
+    所有的钩子函数都接收三个参数 to/from/next,但是afterEach不接收 next 参数 :
+        to: Route: 即将要进入的目标 路由对象
+
+        from: Route: 当前导航正要离开的路由
+    
+        next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+        next(): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed （确认的）。
+        next(false): 中断当前的导航。如果浏览器的 URL 改变了（可能是用户手动或者浏览器后退按钮），那么 URL 地址会重置到 from 路由对应的地址。
+        next('/') 或者 next({ path: '/' }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。
+        你可以向 next 传递任意位置对象，且允许设置诸如replace: true、name: 'home' 之类的选项以及任何用在 router-link 的 to prop 或 router.push 中的选项。
+        next(error): (2.4.0+) 如果传入 next 的参数是一个 Error 实例，则导航会被终止且该错误会被传递给 router.onError() 注册过的回调。
+
     1.全局路由钩子
-
-
-
+    const router = new Router({
+        ...
+    })
+    // 全局前置钩子
+    router.beforeEach((to, from, next) => {
+        console.log("beforeEach")
+        next();
+    })
+    // 全局后置钩子 没有next
+    router.afterEach((to, from) => {
+    console.log("afterEach")
+    })
 
     2.单个路由内的钩子
+    // beforeEnter
+    const router = new Router({
+        routes: [
+            { path: '/', name: 'HelloWorld', component: HelloWorld,
+                beforeEnter: (to, from, next) => {
+                    console.log("beforeEnter--HelloWorld");
+                    next();
+                }
+            },
+        ]
+    })
+
     3.组件内的路由钩子
       export default {
           data () {
