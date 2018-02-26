@@ -42,8 +42,15 @@ Node是后端，此时后端在前端手上，而用Node可以控制页面是服
      2.需要指定
 ```
 
-###1.路由基础
-```javascrpt
+```javascript
+var a = function(){
+  console.log("hello world !")
+}
+```
+
+
+```javascript
+1.路由基础
 router-link :使用router-link组件来导航,在页面会替换为a标签将需要跳转的路由写在to当中
              <router-link to="/home">Home</router-link>
              <router-link to="/subPage">subPage</router-link>
