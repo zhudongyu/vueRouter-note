@@ -77,7 +77,7 @@ router-view:路由出口， 路由匹配到的组件将渲染在这里
   const app = new Vue({router:router}).$mount("#app");
 
 ```
-```
+```html
 2.动态路由
   应用场景举例：我们有一个 User 组件，对于所有 ID 各不相同的用户，都要使用这个组件来渲染。
   配置方法：
@@ -131,7 +131,7 @@ router-view:路由出口， 路由匹配到的组件将渲染在这里
 
  
 ```
-```
+```html5
 3.嵌套路由
     routes: [
         {
@@ -147,7 +147,7 @@ router-view:路由出口， 路由匹配到的组件将渲染在这里
     ]
 
 ```
-```
+```vue
 4.编程式路由
   在 Vue 实例内部，可以通过 $router 访问路由实例。
   因此可以调用 this.$router.push、this.$router.replace、this.$router.go
